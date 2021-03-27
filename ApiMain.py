@@ -60,9 +60,9 @@ class TestApiAuto(object):
     data_db_list = ''
     #启动方法
     def runTest(self):
-        if os.path.exists('../result/report') and os.path.exists('../result/logs'):
-            shutil.rmtree(path='../result/report')
-            shutil.rmtree(path='../result/logs')
+        if os.path.exists('result/report') and os.path.exists('result/logs'):
+            shutil.rmtree(path='result/report')
+            shutil.rmtree(path='result/logs')
             #print(os.path.basename(sys.argv[0]))
         #日志存取路径
         logger.add(log_path,encoding='utf-8')

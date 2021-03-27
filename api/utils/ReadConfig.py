@@ -15,7 +15,7 @@ class ReadConfig(object):
     @logger.catch
     def __init__(self):
         #读取yaml文件配置信息，初始化配置
-        with open('../config/config.yaml','r',encoding='utf-8') as file:
+        with open('config/config.yaml','r',encoding='utf-8') as file:
             self.data = yaml.load(file.read(),Loader=yaml.FullLoader)
 
     @logger.catch
