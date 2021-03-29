@@ -40,7 +40,11 @@ report_zip = rc.read_file_path('report_zip')
 email_setting = rc.read_email_setting()
 db_setting = rc.read_db_setting()
 #读取execl数据对象
-data_response_list = ReadData(case_data_path).get_response_data(sys.argv[1])
+iterv = []
+if len(sys.argv)==2:
+    iterv=sys.argv[1]
+
+data_response_list = ReadData(case_data_path).get_response_data(iterv)
 #data_db_list = ReadData(case_db_path).get_Db_data("access_log")
 
 #数据处理对象
