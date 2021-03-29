@@ -30,8 +30,7 @@ class ReadData(object):
                     value = table.row_values(nrow)
                     value.pop(3)
                     #配合将每一行转换成元组存储，适应pytest的参数化操作，如不需要可以注释掉value = tuple(value)
-                    print(IterV)
-                    print(table.cell_value(nrow,15))
+
                     if IterV in table.cell_value(nrow,15):
                         value = tuple(value)
                         logger.info(f'{value}')
