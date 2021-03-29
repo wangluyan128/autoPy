@@ -80,9 +80,9 @@ class TestApiAuto(object):
 
 #    @allure.story("二级标签")
     @pytest.mark.parametrize('case_number,case_title,path,is_token,method,parametric_key,file_var,'
-                             'file_path,parameters,dependent,data,res_reg,expect,check_db',data_response_list)
+                             'file_path,parameters,dependent,data,res_reg,expect,check_db,version',data_response_list)
     def test_main(self,case_number,case_title,path,is_token,method,parametric_key,file_var,
-                  file_path,parameters,dependent,data,res_reg,expect,check_db):
+                  file_path,parameters,dependent,data,res_reg,expect,check_db,version):
         #动态添加标题
         allure.dynamic.title(case_title)
         logger.debug(f'***********...执行用例编号： {case_number} ...***********')

@@ -3,7 +3,6 @@
 '''
 @project:autoTest
 @file:ReadConfig.py
-@time:2020/11/25
 '''
 import yaml
 from loguru import logger
