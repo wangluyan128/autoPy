@@ -5,6 +5,7 @@
 @author:yan
 @file:ApiMain.py
 """
+import argparse
 import json
 import os
 import shutil
@@ -39,7 +40,7 @@ report_zip = rc.read_file_path('report_zip')
 email_setting = rc.read_email_setting()
 db_setting = rc.read_db_setting()
 #读取execl数据对象
-data_response_list = ReadData(case_data_path).get_response_data()
+data_response_list = ReadData(case_data_path).get_response_data(sys.argv[1])
 #data_db_list = ReadData(case_db_path).get_Db_data("access_log")
 
 #数据处理对象
@@ -58,8 +59,11 @@ logger.info(f'配置文件/excel数据/对象实例化，等前置条件处理�
 @allure.feature('需求管理平台')
 class TestApiAuto(object):
     data_db_list = ''
+    exit_code = 0
     #启动方法
     def runTest(self):
+
+
         if os.path.exists('result/report') and os.path.exists('result/logs'):
             shutil.rmtree(path='result/report')
             shutil.rmtree(path='result/logs')
@@ -68,7 +72,17 @@ class TestApiAuto(object):
         logger.add(log_path,encoding='utf-8')
         #pytest比unittest更简化，方便
         #pytest.main(args = [f'--alluredir={report_data}'])
-        pytest.main(["-s",os.path.basename(sys.argv[0]),"--alluredir", report_data])   # 运行失败的用例可以执行3次,每次间隔5秒 ,"--reruns","3","--reruns-delay","5"
+        pytest_execute_params=["-s",os.path.basename(sys.argv[0]),"--alluredir", report_data] # 运行失败的用例可以执行3次,每次间隔5秒 ,"--reruns","3","--reruns-delay","5"
+
+        #parser=argparse.ArgumentParser() #命令行选项、参数和子命令解析器
+        #parser.add_argument('-k','--keyword',help='只执行匹配关键字的用例，会匹配文件名、类名、方法名',type=str)
+        #args=parser.parse_args()
+        #if args.keyword:
+        #    pytest_execute_params.append('-k')
+        #    pytest_execute_params.append(args.keyword)
+
+        pytest.main(pytest_execute_params)
+        logger.info("结束接口测试")
         # 本地生成 allure 报告文件
         os.system(f'allure generate {report_data} -o {report_generate} --clean')
         # 直接启动allure报告（会占用一个进程，建立一个本地服务并且自动打开浏览器访问，ps 程序不会自动结束，需要自己去关闭）
@@ -80,9 +94,9 @@ class TestApiAuto(object):
 
 #    @allure.story("二级标签")
     @pytest.mark.parametrize('case_number,case_title,path,is_token,method,parametric_key,file_var,'
-                             'file_path,parameters,dependent,data,res_reg,expect,check_db,version',data_response_list)
+                             'file_path,parameters,dependent,data,res_reg,expect,check_db,IterVersion',data_response_list)
     def test_main(self,case_number,case_title,path,is_token,method,parametric_key,file_var,
-                  file_path,parameters,dependent,data,res_reg,expect,check_db,version):
+                  file_path,parameters,dependent,data,res_reg,expect,check_db,IterVersion):
         #动态添加标题
         allure.dynamic.title(case_title)
         logger.debug(f'***********...执行用例编号： {case_number} ...***********')

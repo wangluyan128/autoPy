@@ -15,7 +15,7 @@ class ReadData(object):
         self.excelFile = excelPath
         self.book = xlrd.open_workbook(self.excelFile)
 
-    def get_response_data(self):
+    def get_response_data(self,IterV):
         '''
 
         :return:dataList - pytest参数化可用的数据
@@ -30,9 +30,13 @@ class ReadData(object):
                     value = table.row_values(nrow)
                     value.pop(3)
                     #配合将每一行转换成元组存储，适应pytest的参数化操作，如不需要可以注释掉value = tuple(value)
-                    value = tuple(value)
-                    logger.info(f'{value}')
-                    data_list.append(value)
+                    print(IterV)
+                    print(table.cell_value(nrow,15))
+                    if IterV in table.cell_value(nrow,15):
+                        value = tuple(value)
+                        logger.info(f'{value}')
+                        data_list.append(value)
+
         return data_list
 
     def get_Db_data(self,sheet_name,row_id):
